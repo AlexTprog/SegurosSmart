@@ -11,6 +11,6 @@ namespace SegurosSmart.Models.Consts
         Salud,
         Automóvil,
         Hogar,
-        Viaje,                       
+        Viaje,
     }
 }

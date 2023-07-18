@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<link href="~/Content/datatables.css" rel="stylesheet" />
+<link href="~/Content/cssPropio.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+
+
+<h2>Compañias</h2>
+
+
+<button onclick="openModal(0)" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">Agregar</button>
+
+
+<div id="tabla" class="mt-4">
+
+</div>
+
+
+<div id="myModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="lblTitulo" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <table style="width:80%;margin:auto">
+                    <tr>
+                        <td width="40%">Id Compañia</td>
+                        <td width="60%"><input class="borrar form-control" type="text" id="txtIdComp" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Descripcion </td>
+                        <td><input class="borrar obligatorio  form-control" type="text" id="txtDesc" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese RUC</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtRuc" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Razon Social</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtRazonSocial" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Contacto</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtContacto" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Celular</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtCelular" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Contrato</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtContrato" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Fecha Renovacion</td>
+                        <td><input class="borrar obligatorio  form-control" id="dtFechaRen" type="text" /></td>
+                    </tr>
+
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button onclick="Agregar()" id="btnAceptar" type="button" class="btn btn-success">Aceptar</button>
+
+                <button id="btnCancelar" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/fontawesome/fontawesome.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/Js/Companias.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

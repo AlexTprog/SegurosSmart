@@ -17,30 +17,62 @@ namespace SegurosSmart.Controllers
 
         public JsonResult Get(int id)
         {
-            var companiaDb = cn.TMCompaniaAseguradora.FirstOrDefault(p => p.Id == id && p.Estado == ((int)EstadoCompania.ACTIVO));
+            var companiaDb = cn.TMCompaniaAseguradora.Where(p => p.Id == id && p.Estado == ((int)EstadoCompania.ACTIVO))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Descripcion,
+                    p.Ruc,
+                    p.RazonSocial,
+                    p.Contacto,
+                    p.Celular,
+                    p.Contrato,
+                    FechaRenovacion = p.FechaRenovacion.ToShortDateString(),
+                });
 
-            return Json(companiaDb);
+            return Json(companiaDb, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAll()
         {
-            var companiasDb = cn.TMCompaniaAseguradora.Where(p => p.Estado == ((int)EstadoCompania.ACTIVO)).ToList();
+            var companiasDb = cn.TMCompaniaAseguradora.Where(p => p.Estado == ((int)EstadoCompania.ACTIVO))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Descripcion,
+                    p.Ruc,
+                    p.RazonSocial,
+                    p.Contacto,
+                    p.Celular,
+                    p.Contrato,
+                    FechaRenovacion = p.FechaRenovacion.ToShortDateString(),
 
-            return Json(companiasDb);
+                }).ToList();
+
+            return Json(companiasDb, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Delete(int id)
+        public int Delete(int id)
         {
-            var companiaDb = cn.TMCompaniaAseguradora.FirstOrDefault(p => p.Id == id);
-            companiaDb.Estado = ((int)EstadoCompania.INACTIVO);
-
-            cn.SubmitChanges();
-
-            return Json(companiaDb);
+            int nregistrosAfectados = 0;
+            try
+            {
+                var companiaDb = cn.TMCompaniaAseguradora.Where(p => p.Id == id).First();
+                companiaDb.Estado = ((int)EstadoCompania.INACTIVO);
+                cn.SubmitChanges();
+                nregistrosAfectados = 1;
+            }
+            catch (Exception ex)
+            {
+                nregistrosAfectados = 0;
+            }
+            return nregistrosAfectados;
         }
 
-        public JsonResult SaveOrUpdate(Compania input)
+        public int SaveOrUpdate(Compania input)
         {
+            int nregistrosAfectados = 0;
+
             var companiaDb = cn.TMCompaniaAseguradora.FirstOrDefault(p => p.Id == input.Id);
 
             try
@@ -58,10 +90,12 @@ namespace SegurosSmart.Controllers
                         Estado = (int)input.Estado,
                         FechaRenovacion = input.FechaRenovacion,
 
-                        FechaCreacion = input.FechaCreacion,
-                        FechaModificacion = input.FechaModificacion,
+                        FechaCreacion = DateTime.Now,
+                        FechaModificacion = DateTime.Now,
                     };
                     cn.TMCompaniaAseguradora.InsertOnSubmit(newCompania);
+                    cn.SubmitChanges();
+                    nregistrosAfectados = 1;
                 }
                 else
                 {
@@ -73,19 +107,20 @@ namespace SegurosSmart.Controllers
                     companiaDb.Descripcion = input.Descripcion;
                     companiaDb.Estado = (int)input.Estado;
                     companiaDb.FechaRenovacion = input.FechaRenovacion;
-                    //AUDIT
-                    companiaDb.FechaCreacion = input.FechaCreacion;
-                    companiaDb.FechaModificacion = input.FechaModificacion;
+                    //AUDIT                   
+                    companiaDb.FechaModificacion = DateTime.Now;
 
                     cn.SubmitChanges();
+                    nregistrosAfectados = 1;
                 }
             }
             catch (Exception ex)
             {
-                //
+                // Manejar la excepción
+                nregistrosAfectados = 0;
             }
 
-            return Json(companiaDb);
+            return nregistrosAfectados;
         }
     }
 }

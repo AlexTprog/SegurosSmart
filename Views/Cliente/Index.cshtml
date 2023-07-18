@@ -1,19 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Clientes";
 }
 
 <link href="~/Content/datatables.css" rel="stylesheet" />
 <link href="~/Content/cssPropio.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
 
-<h2>Cliente</h2>
-
-<label>Seleccione Genero</label>
-<select id="cboGenero">
-</select>
-<input type="button" id="btnBuscar" value="Buscar " class="btn btn-success" />
-<input type="button" id="btnLimpiar" value="Limpiar " class="btn btn-primary" />
+<h2>Clientes</h2>
 
 <button onclick="openModal(0)" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">Agregar</button>
 
@@ -68,9 +62,15 @@
                         <td><input class="borrar obligatorio  form-control" id="txttelefono" type="text" /></td>
                     </tr>
                     <tr>
+                        <td>Ingrese Email</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtEmail" type="text" /></td>
+                    </tr>
+
+                    <tr>
                         <td>Ingrese Direccion</td>
                         <td><input class="borrar obligatorio  form-control" id="txtDireccion" type="text" /></td>
                     </tr>
+
                     <tr>
                         <td>Ingrese Tipo de Documento</td>
                         <td>

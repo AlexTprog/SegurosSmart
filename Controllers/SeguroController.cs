@@ -1,10 +1,9 @@
 ﻿using SegurosSmart.Models.Enums;
 using SegurosSmart.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using SegurosSmart.Models.Consts;
 
 namespace SegurosSmart.Controllers
 {
@@ -17,30 +16,89 @@ namespace SegurosSmart.Controllers
 
         public JsonResult Get(int id)
         {
-            var seguroDb = cn.TMSeguro.FirstOrDefault(p => p.Id == id && p.Estado == ((int)EstadoSeguro.ACTIVO));
+            var seguroDb = cn.TMSeguro.Where(p => p.Id == id && p.Estado == ((int)EstadoSeguro.ACTIVO))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Compania,
+                    p.Descripcion,
+                    Tipo = (TipoSeguro)p.Tipo,
+                    p.Numero,
+                    p.EdadMaxima,
+                    p.FactorImpuesto,
+                    p.PorcentajeComision,
+                    p.Prima,
+                    Moneda = (Moneda)p.Moneda,
+                    p.ImporteMensual,
+                    p.Cobertura,
+                    FechaVigencia = p.FechaVigencia.ToShortDateString(),
+                });
 
-            return Json(seguroDb);
+            return Json(seguroDb, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAll()
         {
-            var seguroDb = cn.TMSeguro.Where(p => p.Estado == ((int)EstadoSeguro.ACTIVO));
+            var seguroDb = cn.TMSeguro.Where(p => p.Estado == ((int)EstadoSeguro.ACTIVO))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Compania,
+                    p.Descripcion,
+                    Tipo = (TipoSeguro)p.Tipo,
+                    p.Numero,
+                    p.EdadMaxima,
+                    p.FactorImpuesto,
+                    p.PorcentajeComision,
+                    p.Prima,
+                    Moneda = (Moneda)p.Moneda,
+                    p.ImporteMensual,
+                    p.Cobertura,
+                    FechaVigencia = p.FechaVigencia.ToShortDateString(),
+                }).ToList();
 
-            return Json(seguroDb);
+            var seguroFormatted = seguroDb.Select(p => new
+            {
+                p.Id,
+                p.Compania,
+                p.Descripcion,
+                Tipo = p.Tipo.ToString(),
+                p.Numero,
+                p.EdadMaxima,
+                p.FactorImpuesto,
+                p.PorcentajeComision,
+                p.Prima,
+                Moneda = p.Moneda.ToString(),
+                p.ImporteMensual,
+                p.Cobertura,
+                p.FechaVigencia,
+            });
+
+            return Json(seguroFormatted, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Delete(int id)
+        public int Delete(int id)
         {
-            var seguroDb = cn.TMSeguro.FirstOrDefault(p => p.Id == id);
+            int nregistrosAfectados = 0;
+            try
+            {
+                var seguroDb = cn.TMSeguro.Where(p => p.Id == id).First();
 
-            seguroDb.Estado = (int)EstadoSeguro.INACTIVO;
-
-            return Json(seguroDb);
+                seguroDb.Estado = (int)EstadoSeguro.INACTIVO;
+                cn.SubmitChanges();
+                nregistrosAfectados = 1;
+            }
+            catch (Exception ex)
+            {
+                nregistrosAfectados = 0;
+            }
+            return nregistrosAfectados;
         }
 
-        public JsonResult SaveOrDelete(Seguro input)
+        public int SaveOrDelete(Seguro input)
         {
             var seguroDb = cn.TMSeguro.FirstOrDefault(p => p.Id == input.Id);
+            int nregistrosAfectados = 0;
             try
             {
                 if (seguroDb is null)
@@ -61,10 +119,12 @@ namespace SegurosSmart.Controllers
                         Prima = input.Prima,
                         Tipo = (int)input.Tipo,
 
-                        FechaCreacion = input.FechaCreacion,
-                        FechaModificacion = input.FechaModificacion,
+                        FechaCreacion = DateTime.Now,
+                        FechaModificacion = DateTime.Now,
                     };
                     cn.TMSeguro.InsertOnSubmit(newSeguro);
+                    cn.SubmitChanges();
+                    nregistrosAfectados = 1;
                 }
                 else
                 {
@@ -82,17 +142,16 @@ namespace SegurosSmart.Controllers
                     seguroDb.Prima = input.Prima;
                     seguroDb.Tipo = (int)input.Tipo;
 
-
-                    seguroDb.FechaCreacion = input.FechaCreacion;
-                    seguroDb.FechaModificacion = input.FechaModificacion;
+                    seguroDb.FechaModificacion = DateTime.Now;
                     cn.SubmitChanges();
+                    nregistrosAfectados = 1;
                 }
             }
             catch (Exception ex)
             {
-                //
+                nregistrosAfectados = 0;
             }
-            return Json(seguroDb);
+            return nregistrosAfectados;
         }
     }
 }

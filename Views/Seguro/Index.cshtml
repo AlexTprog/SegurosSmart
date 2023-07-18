@@ -1,0 +1,109 @@
+﻿
+@{
+    ViewBag.Title = "Seguro";
+}
+
+<link href="~/Content/datatables.css" rel="stylesheet" />
+<link href="~/Content/cssPropio.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+
+<h2>Seguros</h2>
+
+<button onclick="openModal(0)" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">Agregar</button>
+
+
+<div id="tabla" class="mt-4">
+
+</div>
+
+
+<div id="myModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="lblTitulo" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <table style="width:80%;margin:auto">
+                    <tr>
+                        <td width="40%">Id Seguro</td>
+                        <td width="60%"><input class="borrar form-control" type="text" id="txtIdSeguro" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Compañia</td>
+                        <td><input class="borrar obligatorio  form-control" type="text" id="txtComp" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Descripcion</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtDesc" type="text" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Tipo</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtTipo" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Numero</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtNumero" type="text" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Edad Maxima</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtEdadMax" type="number" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Factor Impuesto</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtFactImp" type="number" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Porcentaje Comision</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtPorcentajeCom" type="number" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Prima</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtPrima" type="number" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Importe Mensual</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtMensual" type="number" /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Cobertura</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtCobertura" type="number" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Moneda</td>
+                        <td><input class="borrar obligatorio  form-control" id="txtMoneda" type="number" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ingrese Fecha Vigencia</td>
+                        <td><input class="borrar obligatorio  form-control" id="dtFechaVig" type="text" /></td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button onclick="Agregar()" id="btnAceptar" type="button" class="btn btn-success">Aceptar</button>
+
+                <button id="btnCancelar" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/fontawesome/fontawesome.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/Js/Seguro.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

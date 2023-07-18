@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.SqlTypes;
 
 namespace SegurosSmart.Controllers
 {
@@ -16,35 +17,24 @@ namespace SegurosSmart.Controllers
             return View();
         }
 
-        public JsonResult Get(int id)
+        public ActionResult Get(int id)
         {
-            var clienteDb = cn.TMCliente.Where(p => p.Id == id && p.Estado == ((int)EstadoSeguro.ACTIVO)).Select(p => new
-            {
-                p.Id,
-                p.Nombres,
-                p.ApellidoPaterno,
-                p.ApellidoMaterno,
-                p.FechaNacimiento,
-                Genero = (Genero)p.Genero,
-                p.Telefono,
-                p.Direccion,
-                TipoDocumento = (TipoDocumento)p.TipoDocumento,
-                p.DocumentoIdentidad,
-            });
+            var clienteDb = cn.TMCliente.Where(p => p.Id == id && p.Estado == ((int)EstadoSeguro.ACTIVO))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Nombres,
+                    p.ApellidoPaterno,
+                    p.ApellidoMaterno,
+                    FechaNacimiento = p.FechaNacimiento.ToShortDateString(),
+                    Genero = (Genero)p.Genero,
+                    p.Telefono,
+                    p.Direccion,
+                    TipoDocumento = (TipoDocumento)p.TipoDocumento,
+                    p.DocumentoIdentidad,
+                    p.Email
+                });
 
-            var clientesFormatted = clienteDb.Select(p => new
-            {
-                p.Id,
-                p.Nombres,
-                p.ApellidoPaterno,
-                p.ApellidoMaterno,
-                FechaNacimiento = p.FechaNacimiento.ToString("yyyy/MM/dd"),
-                Genero = p.Genero.ToString(),
-                p.Telefono,
-                p.Direccion,
-                TipoDocumento = p.TipoDocumento.ToString(),
-                p.DocumentoIdentidad,
-            });
 
             return Json(clienteDb, JsonRequestBehavior.AllowGet);
         }
@@ -59,25 +49,27 @@ namespace SegurosSmart.Controllers
                     p.Nombres,
                     p.ApellidoPaterno,
                     p.ApellidoMaterno,
-                    p.FechaNacimiento,
+                    FechaNacimiento = p.FechaNacimiento.ToShortDateString(),
                     Genero = (Genero)p.Genero,
                     p.Telefono,
                     p.Direccion,
+                    p.Email,
                     TipoDocumento = (TipoDocumento)p.TipoDocumento,
-                    p.DocumentoIdentidad,
+                    p.DocumentoIdentidad
                 })
                 .ToList();
-
+            
             var clientesFormatted = clientesDb.Select(p => new
             {
                 p.Id,
                 p.Nombres,
                 p.ApellidoPaterno,
                 p.ApellidoMaterno,
-                FechaNacimiento = p.FechaNacimiento.ToString("yyyy/MM/dd"),
+                p.FechaNacimiento,
                 Genero = p.Genero.ToString(),
                 p.Telefono,
                 p.Direccion,
+                p.Email,
                 TipoDocumento = p.TipoDocumento.ToString(),
                 p.DocumentoIdentidad,
             });
@@ -85,24 +77,34 @@ namespace SegurosSmart.Controllers
             return Json(clientesFormatted, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Delete(int id)
+        public int Delete(int id)
         {
-            var clienteDb = cn.TMCliente.Where(p => p.Id == id).First();
+            int nregistrosAfectados = 0;
+            try
+            {
+                var clienteDb = cn.TMCliente.Where(p => p.Id == id).First();
 
-            clienteDb.Estado = ((int)EstadoCliente.INACTIVO);
-            cn.SubmitChanges();
+                clienteDb.Estado = ((int)EstadoCliente.INACTIVO);
+                cn.SubmitChanges();
+                nregistrosAfectados = 1;
+            }
+            catch (Exception ex)
+            {
+                nregistrosAfectados = 0;
+            }
 
-            return Json(clienteDb, JsonRequestBehavior.AllowGet);
+            return nregistrosAfectados;
         }
 
-        public JsonResult SaveOrUpdate(Cliente input)
+        public int SaveOrUpdate(Cliente input)
         {
             var clienteDb = cn.TMCliente.FirstOrDefault(p => p.Id == input.Id);
-
+            int nregistrosAfectados = 0;
             try
             {
                 if (clienteDb is null)
                 {
+
                     var newCliente = new Data.TMCliente
                     {
                         Nombres = input.Nombres,
@@ -116,11 +118,14 @@ namespace SegurosSmart.Controllers
                         Genero = (int)input.Genero,
                         FechaNacimiento = input.FechaNacimiento,
                         Telefono = input.Telefono,
-                        FechaCreacion = input.FechaCreacion,
-                        FechaModificacion = input.FechaModificacion,
+
+                        FechaCreacion = DateTime.Now,
+                        FechaModificacion = DateTime.Now,
                     };
 
                     cn.TMCliente.InsertOnSubmit(newCliente);
+                    cn.SubmitChanges();
+                    nregistrosAfectados = 1;
                 }
                 else
                 {
@@ -135,33 +140,21 @@ namespace SegurosSmart.Controllers
                     clienteDb.Genero = (int)input.Genero;
                     clienteDb.FechaNacimiento = input.FechaNacimiento;
                     clienteDb.Telefono = input.Telefono;
-                    clienteDb.FechaCreacion = input.FechaCreacion;
-                    clienteDb.FechaModificacion = input.FechaModificacion;
+
+                    clienteDb.FechaModificacion = DateTime.Now;
 
                     cn.SubmitChanges();
+                    nregistrosAfectados = 1;
                 }
             }
             catch (Exception ex)
             {
                 // Manejar la excepción
+                nregistrosAfectados = 0;
             }
 
-            return Json(clienteDb, JsonRequestBehavior.AllowGet);
+            return nregistrosAfectados;
         }
 
-        public JsonResult GetGeneros()
-        {
-            List<GeneroDTO> generos = new List<GeneroDTO>();
-            foreach (Genero genero in Enum.GetValues(typeof(Genero)))
-            {
-                generos.Add(new GeneroDTO
-                {
-                    Id = (int)genero,
-                    Nombre = genero.ToString()
-                });
-            }
-
-            return Json(generos, JsonRequestBehavior.AllowGet);
-        }
     }
 }
