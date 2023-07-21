@@ -122,7 +122,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AfiliacionController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Base\BaseController.cs" />
+    <Compile Include="Controllers\Base\ICrudController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CompaniaController.cs" />
     <Compile Include="Controllers\SeguroController.cs" />
@@ -146,7 +147,7 @@
     <Compile Include="Models\Consts\Moneda.cs" />
     <Compile Include="Models\Consts\TipoDocumento.cs" />
     <Compile Include="Models\Consts\TipoSeguro.cs" />
-    <Compile Include="Models\ModelBase.cs" />
+    <Compile Include="Models\Base\ModelBase.cs" />
     <Compile Include="Models\Seguro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -237,6 +238,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Js\Afiliacion.js" />
     <Content Include="Scripts\Js\Cliente.js" />
     <Content Include="Scripts\Js\Companias.js" />
     <Content Include="Scripts\Js\Seguro.js" />

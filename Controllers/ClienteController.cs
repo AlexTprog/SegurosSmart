@@ -7,17 +7,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.SqlTypes;
+using SegurosSmart.Controllers.Base;
 
 namespace SegurosSmart.Controllers
 {
-    public class ClienteController : BaseController
+    public class ClienteController : BaseController, ICrudController<Cliente>
     {
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Get(int id)
+        public JsonResult Get(int id)
         {
             var clienteDb = cn.TMCliente.Where(p => p.Id == id && p.Estado == ((int)EstadoSeguro.ACTIVO))
                 .Select(p => new
@@ -58,7 +59,7 @@ namespace SegurosSmart.Controllers
                     p.DocumentoIdentidad
                 })
                 .ToList();
-            
+
             var clientesFormatted = clientesDb.Select(p => new
             {
                 p.Id,

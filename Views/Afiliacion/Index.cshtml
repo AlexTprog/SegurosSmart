@@ -3,5 +3,66 @@
     ViewBag.Title = "Afiliacion";
 }
 
+<link href="~/Content/datatables.css" rel="stylesheet" />
+<link href="~/Content/cssPropio.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+
 <h2>Afiliacion</h2>
 
+<button onclick="openModal(0)" type="button" class="btn btn-dark" data-toggle="modal" data-target="#myModal">Agregar</button>
+
+<div id="tabla" class="mt-4">
+
+</div>
+
+<div id="myModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 id="lblTitulo" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <table style="width:80%;margin:auto">
+                    <tr>
+                        <td width="40%">Id Afiliacion</td>
+                        <td width="60%"><input class="borrar form-control" type="text" id="txtIdAfiliacion" readonly /></td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Cliente</td>
+                        <td>
+                            <select id="cboCliente" class="borrar obligatorio form-select">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Seguro</td>
+                        <td>
+                            <select id="cboSeguro" class="borrar obligatorio form-select">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ingrese Fecha Afiliacion</td>
+                        <td><input class="borrar obligatorio  form-control" id="dtFechaAfiliacion" type="text" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button onclick="Agregar()" id="btnAceptar" type="button" class="btn btn-success">Aceptar</button>
+
+                <button id="btnCancelar" type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="~/Scripts/fontawesome/fontawesome.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/Js/Afiliacion.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

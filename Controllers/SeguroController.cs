@@ -4,10 +4,11 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using SegurosSmart.Models.Consts;
+using SegurosSmart.Controllers.Base;
 
 namespace SegurosSmart.Controllers
 {
-    public class SeguroController : BaseController
+    public class SeguroController : BaseController, ICrudController<Seguro>
     {
         public ActionResult Index()
         {
@@ -20,7 +21,7 @@ namespace SegurosSmart.Controllers
                 .Select(p => new
                 {
                     p.Id,
-                    p.Compania,
+                    cn.TMCompaniaAseguradora.FirstOrDefault(c => c.Id == p.Compania).RazonSocial,
                     p.Descripcion,
                     Tipo = (TipoSeguro)p.Tipo,
                     p.Numero,
@@ -43,7 +44,7 @@ namespace SegurosSmart.Controllers
                 .Select(p => new
                 {
                     p.Id,
-                    p.Compania,
+                    Compania = p.TMCompaniaAseguradora.RazonSocial,
                     p.Descripcion,
                     Tipo = (TipoSeguro)p.Tipo,
                     p.Numero,
@@ -95,7 +96,7 @@ namespace SegurosSmart.Controllers
             return nregistrosAfectados;
         }
 
-        public int SaveOrDelete(Seguro input)
+        public int SaveOrUpdate(Seguro input)
         {
             var seguroDb = cn.TMSeguro.FirstOrDefault(p => p.Id == input.Id);
             int nregistrosAfectados = 0;

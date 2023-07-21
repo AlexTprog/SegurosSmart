@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SegurosSmart.Controllers.Base;
 
 namespace SegurosSmart.Controllers
 {
-    public class CompaniaController : BaseController
+    public class CompaniaController : BaseController, ICrudController<Compania>
     {
         public ActionResult Index()
         {
