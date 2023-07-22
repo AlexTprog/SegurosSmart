@@ -36,7 +36,6 @@ namespace SegurosSmart.Controllers
                     p.Email
                 });
 
-
             return Json(clienteDb, JsonRequestBehavior.AllowGet);
         }
 
@@ -51,31 +50,16 @@ namespace SegurosSmart.Controllers
                     p.ApellidoPaterno,
                     p.ApellidoMaterno,
                     FechaNacimiento = p.FechaNacimiento.ToShortDateString(),
-                    Genero = (Genero)p.Genero,
+                    Genero = Enum.GetName(typeof(Genero), p.Genero),
                     p.Telefono,
                     p.Direccion,
                     p.Email,
-                    TipoDocumento = (TipoDocumento)p.TipoDocumento,
+                    TipoDocumento = Enum.GetName(typeof(TipoDocumento), p.TipoDocumento),
                     p.DocumentoIdentidad
                 })
                 .ToList();
 
-            var clientesFormatted = clientesDb.Select(p => new
-            {
-                p.Id,
-                p.Nombres,
-                p.ApellidoPaterno,
-                p.ApellidoMaterno,
-                p.FechaNacimiento,
-                Genero = p.Genero.ToString(),
-                p.Telefono,
-                p.Direccion,
-                p.Email,
-                TipoDocumento = p.TipoDocumento.ToString(),
-                p.DocumentoIdentidad,
-            });
-
-            return Json(clientesFormatted, JsonRequestBehavior.AllowGet);
+            return Json(clientesDb, JsonRequestBehavior.AllowGet);
         }
 
         public int Delete(int id)
@@ -121,7 +105,6 @@ namespace SegurosSmart.Controllers
                         Telefono = input.Telefono,
 
                         FechaCreacion = DateTime.Now,
-                        FechaModificacion = DateTime.Now,
                     };
 
                     cn.TMCliente.InsertOnSubmit(newCliente);
@@ -157,5 +140,29 @@ namespace SegurosSmart.Controllers
             return nregistrosAfectados;
         }
 
+        public JsonResult GetGeneros()
+        {
+            var generos = new List<(int, string)>();
+
+            foreach (var genero in Enum.GetValues(typeof(Genero)))
+            {
+                generos.Add((Convert.ToInt32(genero), Convert.ToString(genero)));
+            }
+
+            return Json(generos, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetTipoDocumento()
+        {
+            var tiposDocumento = new List<(int, string)>();
+
+
+            foreach (var documento in Enum.GetValues(typeof(TipoDocumento)))
+            {
+                tiposDocumento.Add((Convert.ToInt32(documento), Convert.ToString(documento)));
+            }
+
+            return Json(tiposDocumento, JsonRequestBehavior.AllowGet);
+        }
     }
 }

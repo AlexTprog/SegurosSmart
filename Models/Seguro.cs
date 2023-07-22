@@ -10,7 +10,7 @@ namespace SegurosSmart.Models
     public class Seguro: ModelBase
     {
         public int Id { get; set; }
-        public Compania Compania { get; set; }
+        public int Compania { get; set; }
         public string Numero { get; set; }
         public TipoSeguro Tipo { get; set; }
         public string Descripcion { get; set;}

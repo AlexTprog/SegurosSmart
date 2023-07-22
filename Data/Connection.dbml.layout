@@ -26,21 +26,21 @@
         <elementListCompartment Id="58162f91-88fb-45b5-b91c-3a76f92d20f3" absoluteBounds="3.515, 1.46, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 8.00080485026042); (7.25 : 8.00080485026042); (7.25 : 4.03049967447917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 8.00080485026042); (7.25 : 8.00080485026042); (7.25 : 4.03049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ConnectionDataContext/TMCliente/TMCliente_TRAfiliacion" />
       <nodes>
         <classShapeMoniker Id="ca7d0b18-3c41-4e2d-90d0-c25016c4ed14" />
         <classShapeMoniker Id="e91600ca-22f0-4d45-ad7c-1b1131b2bfb4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 2.95274983723958); (6.25 : 2.95274983723958)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 2.95274983723958); (6.25 : 2.95274983723958)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ConnectionDataContext/TMSeguro/TMSeguro_TRAfiliacion" />
       <nodes>
         <classShapeMoniker Id="f8beb9d9-82a8-4509-9327-b3fa6e352c8d" />
         <classShapeMoniker Id="e91600ca-22f0-4d45-ad7c-1b1131b2bfb4" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 2.96235270182292); (3.5 : 2.96235270182292)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 2.96235270182292); (3.5 : 2.96235270182292)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ConnectionDataContext/TMCompaniaAseguradora/TMCompaniaAseguradora_TMSeguro" />
       <nodes>
         <classShapeMoniker Id="d8def6f1-53b6-46ed-a802-6273eafbe5b7" />

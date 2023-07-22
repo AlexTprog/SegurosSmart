@@ -78,7 +78,7 @@ namespace SegurosSmart.Controllers
 
             try
             {
-                if (companiaDb != null)
+                if (companiaDb is null)
                 {
                     var newCompania = new Data.TMCompaniaAseguradora
                     {
@@ -91,8 +91,7 @@ namespace SegurosSmart.Controllers
                         Estado = (int)input.Estado,
                         FechaRenovacion = input.FechaRenovacion,
 
-                        FechaCreacion = DateTime.Now,
-                        FechaModificacion = DateTime.Now,
+                        FechaCreacion = DateTime.Now,                        
                     };
                     cn.TMCompaniaAseguradora.InsertOnSubmit(newCompania);
                     cn.SubmitChanges();

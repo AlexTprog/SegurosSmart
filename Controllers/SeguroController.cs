@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using SegurosSmart.Models.Consts;
 using SegurosSmart.Controllers.Base;
+using System.Collections.Generic;
 
 namespace SegurosSmart.Controllers
 {
@@ -21,15 +22,15 @@ namespace SegurosSmart.Controllers
                 .Select(p => new
                 {
                     p.Id,
-                    cn.TMCompaniaAseguradora.FirstOrDefault(c => c.Id == p.Compania).RazonSocial,
+                    p.Compania,
                     p.Descripcion,
-                    Tipo = (TipoSeguro)p.Tipo,
+                    p.Tipo,
                     p.Numero,
                     p.EdadMaxima,
                     p.FactorImpuesto,
                     p.PorcentajeComision,
                     p.Prima,
-                    Moneda = (Moneda)p.Moneda,
+                    p.Moneda,
                     p.ImporteMensual,
                     p.Cobertura,
                     FechaVigencia = p.FechaVigencia.ToShortDateString(),
@@ -40,42 +41,25 @@ namespace SegurosSmart.Controllers
 
         public JsonResult GetAll()
         {
-            var seguroDb = cn.TMSeguro.Where(p => p.Estado == ((int)EstadoSeguro.ACTIVO))
+            var segurosDb = cn.TMSeguro.Where(p => p.Estado == ((int)EstadoSeguro.ACTIVO))
                 .Select(p => new
                 {
                     p.Id,
                     Compania = p.TMCompaniaAseguradora.RazonSocial,
                     p.Descripcion,
-                    Tipo = (TipoSeguro)p.Tipo,
+                    Tipo = Enum.GetName(typeof(TipoSeguro), p.Tipo),
                     p.Numero,
                     p.EdadMaxima,
                     p.FactorImpuesto,
                     p.PorcentajeComision,
                     p.Prima,
-                    Moneda = (Moneda)p.Moneda,
+                    Moneda = Enum.GetName(typeof(Moneda), p.Moneda),
                     p.ImporteMensual,
                     p.Cobertura,
                     FechaVigencia = p.FechaVigencia.ToShortDateString(),
                 }).ToList();
 
-            var seguroFormatted = seguroDb.Select(p => new
-            {
-                p.Id,
-                p.Compania,
-                p.Descripcion,
-                Tipo = p.Tipo.ToString(),
-                p.Numero,
-                p.EdadMaxima,
-                p.FactorImpuesto,
-                p.PorcentajeComision,
-                p.Prima,
-                Moneda = p.Moneda.ToString(),
-                p.ImporteMensual,
-                p.Cobertura,
-                p.FechaVigencia,
-            });
-
-            return Json(seguroFormatted, JsonRequestBehavior.AllowGet);
+            return Json(segurosDb, JsonRequestBehavior.AllowGet);
         }
 
         public int Delete(int id)
@@ -108,7 +92,7 @@ namespace SegurosSmart.Controllers
                     {
                         Numero = input.Numero,
                         Cobertura = input.Cobertura,
-                        Compania = input.Compania.Id,
+                        Compania = input.Compania,
                         Descripcion = input.Descripcion,
                         EdadMaxima = input.EdadMaxima,
                         Estado = (int)input.Estado,
@@ -119,9 +103,8 @@ namespace SegurosSmart.Controllers
                         PorcentajeComision = input.PorcentajeComision,
                         Prima = input.Prima,
                         Tipo = (int)input.Tipo,
-
+                        //ADUIT
                         FechaCreacion = DateTime.Now,
-                        FechaModificacion = DateTime.Now,
                     };
                     cn.TMSeguro.InsertOnSubmit(newSeguro);
                     cn.SubmitChanges();
@@ -131,7 +114,7 @@ namespace SegurosSmart.Controllers
                 {
                     seguroDb.Numero = input.Numero;
                     seguroDb.Cobertura = input.Cobertura;
-                    seguroDb.Compania = input.Compania.Id;
+                    seguroDb.Compania = input.Compania;
                     seguroDb.Descripcion = input.Descripcion;
                     seguroDb.EdadMaxima = input.EdadMaxima;
                     seguroDb.Estado = (int)input.Estado;
@@ -142,7 +125,7 @@ namespace SegurosSmart.Controllers
                     seguroDb.PorcentajeComision = input.PorcentajeComision;
                     seguroDb.Prima = input.Prima;
                     seguroDb.Tipo = (int)input.Tipo;
-
+                    //AUDIT
                     seguroDb.FechaModificacion = DateTime.Now;
                     cn.SubmitChanges();
                     nregistrosAfectados = 1;
@@ -153,6 +136,30 @@ namespace SegurosSmart.Controllers
                 nregistrosAfectados = 0;
             }
             return nregistrosAfectados;
+        }
+
+        public JsonResult GetTipoSeguro()
+        {
+            var tiposSeguro = new List<(int, string)>();
+
+            foreach (var seguro in Enum.GetValues(typeof(TipoSeguro)))
+            {
+                tiposSeguro.Add((Convert.ToInt32(seguro), Convert.ToString(seguro)));
+            }
+
+            return Json(tiposSeguro, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetMonedas()
+        {
+            var monedas = new List<(int, string)>();
+
+            foreach (var moneda in Enum.GetValues(typeof(Moneda)))
+            {
+                monedas.Add((Convert.ToInt32(moneda), Convert.ToString(moneda)));
+            }
+
+            return Json(monedas, JsonRequestBehavior.AllowGet);
         }
     }
 }

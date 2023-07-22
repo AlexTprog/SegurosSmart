@@ -30,11 +30,16 @@
                 <table style="width:80%;margin:auto">
                     <tr>
                         <td width="40%">Id Seguro</td>
-                        <td width="60%"><input class="borrar form-control" type="text" id="txtIdSeguro" readonly /></td>
+                        <td width="60%">
+                            <input class="borrar form-control" type="text" id="txtIdSeguro" readonly />
+                        </td>
                     </tr>
                     <tr>
                         <td>Ingrese Compañia</td>
-                        <td><input class="borrar obligatorio  form-control" type="text" id="txtComp" /></td>
+                        <td>
+                            <select id="cboCompania" class="borrar obligatorio form-select">
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Ingrese Descripcion</td>
@@ -42,7 +47,10 @@
                     </tr>
                     <tr>
                         <td>Ingrese Tipo</td>
-                        <td><input class="borrar obligatorio  form-control" id="txtTipo" type="text" /></td>
+                        <td>
+                            <select id="cboTipo" class="borrar obligatorio form-select">
+                            </select>
+                        </td>
                     </tr>
 
                     <tr>
@@ -80,7 +88,10 @@
 
                     <tr>
                         <td>Ingrese Moneda</td>
-                        <td><input class="borrar obligatorio  form-control" id="txtMoneda" type="number" /></td>
+                        <td>
+                            <select id="cboMoneda" class="borrar obligatorio form-select">
+                            </select>
+                        </td>
                     </tr>
 
                     <tr>
@@ -101,9 +112,10 @@
 </div>
 
 
-<script src="~/Scripts/fontawesome/fontawesome.min.js"></script>
+
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/Js/Commons.js"></script>
 <script src="~/Scripts/Js/Seguro.js"></script>
 <script src="~/Scripts/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

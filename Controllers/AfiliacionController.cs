@@ -66,13 +66,13 @@ namespace SegurosSmart.Controllers
         public int SaveOrUpdate(Afiliacion input)
         {
             var dbAfiliacion = cn.TRAfiliacion.FirstOrDefault(p => p.Id == input.Id);
-            int nregistrosAfectados = 0;
-
+            int responseCode = 0;
             try
             {
                 if (dbAfiliacion is null)
                 {
                     //Podria validar que tengan el estado activo
+                    //No es necesario porque solo listo los activos
                     var seguro = cn.TMSeguro.FirstOrDefault(p => p.Id == input.Seguro);
                     var cliente = cn.TMCliente.FirstOrDefault(p => p.Id == input.Cliente);
 
@@ -80,7 +80,8 @@ namespace SegurosSmart.Controllers
 
                     if (edad >= seguro.EdadMaxima)
                     {
-                        return nregistrosAfectados = 0;
+                        return responseCode = 2;
+                        //Agregar respuesta
                     }
 
                     var newAfiliacion = new Data.TRAfiliacion
@@ -95,29 +96,31 @@ namespace SegurosSmart.Controllers
 
                     cn.TRAfiliacion.InsertOnSubmit(newAfiliacion);
                     cn.SubmitChanges();
-                    nregistrosAfectados = 1;
+                    responseCode = 1;
                 }
                 else
                 {
-
                     var edad = DateTime.Now.Year - dbAfiliacion.TMCliente.FechaNacimiento.Year;
 
                     if (edad >= dbAfiliacion.TMSeguro.EdadMaxima)
                     {
-                        return nregistrosAfectados = 0;
+                        return responseCode = 0;
                     }
                     dbAfiliacion.Cliente = input.Cliente;
                     dbAfiliacion.Seguro = input.Seguro;
                     dbAfiliacion.FechaAfiliacion = input.FechaAfiliacion;
 
                     dbAfiliacion.FechaModificacion = DateTime.Now;
+
+                    responseCode = 1;
                 }
             }
             catch (Exception e)
             {
-                nregistrosAfectados = 0;
+                responseCode = 0;
             }
-            return nregistrosAfectados;
+
+            return responseCode;
         }
     }
 }

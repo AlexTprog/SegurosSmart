@@ -35,7 +35,7 @@
     <Type Name="TMCompaniaAseguradora">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Descripcion" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="Ruc" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="Ruc" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
       <Column Name="RazonSocial" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Contacto" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Celular" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
