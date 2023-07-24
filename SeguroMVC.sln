@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroMVC", "SeguroMVC.csproj", "{DFF02E82-07A3-4BD1-B172-79FBA831898F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFSeguro", "..\WCFSeguro\WCFSeguro.csproj", "{21D3D33D-B070-4453-B3E7-179CF8C083A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFSeguro", "WCFSeguro\WCFSeguro.csproj", "{597E2670-2586-4AD6-BCF4-051FC5110DA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{DFF02E82-07A3-4BD1-B172-79FBA831898F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFF02E82-07A3-4BD1-B172-79FBA831898F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFF02E82-07A3-4BD1-B172-79FBA831898F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21D3D33D-B070-4453-B3E7-179CF8C083A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21D3D33D-B070-4453-B3E7-179CF8C083A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21D3D33D-B070-4453-B3E7-179CF8C083A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21D3D33D-B070-4453-B3E7-179CF8C083A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{597E2670-2586-4AD6-BCF4-051FC5110DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{597E2670-2586-4AD6-BCF4-051FC5110DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{597E2670-2586-4AD6-BCF4-051FC5110DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{597E2670-2586-4AD6-BCF4-051FC5110DA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BDSegurosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TMCliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TipoDocumento" Type="int" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Genero" Type="int" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TMCompaniaAseguradora">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="text" Nullable="false" />
+          <Property Name="Ruc" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="RazonSocial" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Contacto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Celular" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Contrato" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaRenovacion" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TMSeguro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Compania" Type="int" Nullable="false" />
+          <Property Name="Numero" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Tipo" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FactorImpuesto" Type="int" Nullable="false" />
+          <Property Name="PorcentajeComision" Type="int" Nullable="false" />
+          <Property Name="Prima" Type="int" Nullable="false" />
+          <Property Name="Moneda" Type="int" Nullable="false" />
+          <Property Name="EdadMaxima" Type="int" Nullable="false" />
+          <Property Name="FechaVigencia" Type="datetime" Nullable="false" />
+          <Property Name="ImporteMensual" Type="int" Nullable="false" />
+          <Property Name="Cobertura" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TRAfiliacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Cliente" Type="int" Nullable="false" />
+          <Property Name="Seguro" Type="int" Nullable="false" />
+          <Property Name="FechaAfiliacion" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TRPago">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Afiliacion" Type="int" Nullable="false" />
+          <Property Name="Cliente" Type="int" Nullable="false" />
+          <Property Name="Seguro" Type="int" Nullable="false" />
+          <Property Name="Mes" Type="int" Nullable="false" />
+          <Property Name="Anio" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Cuota" Type="int" Nullable="false" />
+          <Property Name="Monto" Type="int" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="Estado" Type="varchar" MaxLength="30" />
+          <Property Name="FechaCreacion" Type="datetime" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
+        <Association Name="TMSeguro_FK_Compania">
+          <End Role="TMCompaniaAseguradora" Type="Self.TMCompaniaAseguradora" Multiplicity="1" />
+          <End Role="TMSeguro" Type="Self.TMSeguro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TMCompaniaAseguradora">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TMSeguro">
+              <PropertyRef Name="Compania" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAfiliacion_FK_Cliente">
+          <End Role="TMCliente" Type="Self.TMCliente" Multiplicity="1" />
+          <End Role="TRAfiliacion" Type="Self.TRAfiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TMCliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TRAfiliacion">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAfiliacion_FK_Seguro">
+          <End Role="TMSeguro" Type="Self.TMSeguro" Multiplicity="1" />
+          <End Role="TRAfiliacion" Type="Self.TRAfiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TMSeguro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TRAfiliacion">
+              <PropertyRef Name="Seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAfiliacion_FK_TRPago_Id">
+          <End Role="TRAfiliacion" Type="Self.TRAfiliacion" Multiplicity="1" />
+          <End Role="TRPago" Type="Self.TRPago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAfiliacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TRPago">
+              <PropertyRef Name="Afiliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDSegurosModelStoreContainer">
+          <EntitySet Name="TMCliente" EntityType="Self.TMCliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TMCompaniaAseguradora" EntityType="Self.TMCompaniaAseguradora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TMSeguro" EntityType="Self.TMSeguro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRAfiliacion" EntityType="Self.TRAfiliacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRPago" EntityType="Self.TRPago" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="TMSeguro_FK_Compania" Association="Self.TMSeguro_FK_Compania">
+            <End Role="TMCompaniaAseguradora" EntitySet="TMCompaniaAseguradora" />
+            <End Role="TMSeguro" EntitySet="TMSeguro" />
+          </AssociationSet>
+          <AssociationSet Name="TRAfiliacion_FK_Cliente" Association="Self.TRAfiliacion_FK_Cliente">
+            <End Role="TMCliente" EntitySet="TMCliente" />
+            <End Role="TRAfiliacion" EntitySet="TRAfiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="TRAfiliacion_FK_Seguro" Association="Self.TRAfiliacion_FK_Seguro">
+            <End Role="TMSeguro" EntitySet="TMSeguro" />
+            <End Role="TRAfiliacion" EntitySet="TRAfiliacion" />
+          </AssociationSet>
+          <AssociationSet Name="TRAfiliacion_FK_TRPago_Id" Association="Self.TRAfiliacion_FK_TRPago_Id">
+            <End Role="TRAfiliacion" EntitySet="TRAfiliacion" />
+            <End Role="TRPago" EntitySet="TRPago" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDSegurosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TMCliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="DocumentoIdentidad" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Genero" Type="Int32" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TRAfiliacions" Relationship="Self.TRAfiliacion_FK_Cliente" FromRole="TMCliente" ToRole="TRAfiliacion" />
+        </EntityType>
+        <EntityType Name="TMCompaniaAseguradora">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ruc" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contacto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Celular" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrato" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaRenovacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TMSeguroes" Relationship="Self.TMSeguro_FK_Compania" FromRole="TMCompaniaAseguradora" ToRole="TMSeguro" />
+        </EntityType>
+        <EntityType Name="TMSeguro">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Compania" Type="Int32" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FactorImpuesto" Type="Int32" Nullable="false" />
+          <Property Name="PorcentajeComision" Type="Int32" Nullable="false" />
+          <Property Name="Prima" Type="Int32" Nullable="false" />
+          <Property Name="Moneda" Type="Int32" Nullable="false" />
+          <Property Name="EdadMaxima" Type="Int32" Nullable="false" />
+          <Property Name="FechaVigencia" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ImporteMensual" Type="Int32" Nullable="false" />
+          <Property Name="Cobertura" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TMCompaniaAseguradora" Relationship="Self.TMSeguro_FK_Compania" FromRole="TMSeguro" ToRole="TMCompaniaAseguradora" />
+          <NavigationProperty Name="TRAfiliacions" Relationship="Self.TRAfiliacion_FK_Seguro" FromRole="TMSeguro" ToRole="TRAfiliacion" />
+        </EntityType>
+        <EntityType Name="TRAfiliacion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Cliente" Type="Int32" Nullable="false" />
+          <Property Name="Seguro" Type="Int32" Nullable="false" />
+          <Property Name="FechaAfiliacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TMCliente" Relationship="Self.TRAfiliacion_FK_Cliente" FromRole="TRAfiliacion" ToRole="TMCliente" />
+          <NavigationProperty Name="TMSeguro" Relationship="Self.TRAfiliacion_FK_Seguro" FromRole="TRAfiliacion" ToRole="TMSeguro" />
+          <NavigationProperty Name="TRPagoes" Relationship="Self.TRAfiliacion_FK_TRPago_Id" FromRole="TRAfiliacion" ToRole="TRPago" />
+        </EntityType>
+        <EntityType Name="TRPago">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Afiliacion" Type="Int32" Nullable="false" />
+          <Property Name="Cliente" Type="Int32" Nullable="false" />
+          <Property Name="Seguro" Type="Int32" Nullable="false" />
+          <Property Name="Mes" Type="Int32" Nullable="false" />
+          <Property Name="Anio" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cuota" Type="Int32" Nullable="false" />
+          <Property Name="Monto" Type="Int32" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TRAfiliacion" Relationship="Self.TRAfiliacion_FK_TRPago_Id" FromRole="TRPago" ToRole="TRAfiliacion" />
+        </EntityType>
+        <Association Name="TRAfiliacion_FK_Cliente">
+          <End Role="TMCliente" Type="Self.TMCliente" Multiplicity="1" />
+          <End Role="TRAfiliacion" Type="Self.TRAfiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TMCliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TRAfiliacion">
+              <PropertyRef Name="Cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TMSeguro_FK_Compania">
+          <End Role="TMCompaniaAseguradora" Type="Self.TMCompaniaAseguradora" Multiplicity="1" />
+          <End Role="TMSeguro" Type="Self.TMSeguro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TMCompaniaAseguradora">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TMSeguro">
+              <PropertyRef Name="Compania" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAfiliacion_FK_Seguro">
+          <End Role="TMSeguro" Type="Self.TMSeguro" Multiplicity="1" />
+          <End Role="TRAfiliacion" Type="Self.TRAfiliacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TMSeguro">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TRAfiliacion">
+              <PropertyRef Name="Seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TRAfiliacion_FK_TRPago_Id">
+          <End Role="TRAfiliacion" Type="Self.TRAfiliacion" Multiplicity="1" />
+          <End Role="TRPago" Type="Self.TRPago" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRAfiliacion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TRPago">
+              <PropertyRef Name="Afiliacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDSegurosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TMClientes" EntityType="Self.TMCliente" />
+          <EntitySet Name="TMCompaniaAseguradoras" EntityType="Self.TMCompaniaAseguradora" />
+          <EntitySet Name="TMSeguroes" EntityType="Self.TMSeguro" />
+          <EntitySet Name="TRAfiliacions" EntityType="Self.TRAfiliacion" />
+          <EntitySet Name="TRPagoes" EntityType="Self.TRPago" />
+          <AssociationSet Name="TRAfiliacion_FK_Cliente" Association="Self.TRAfiliacion_FK_Cliente">
+            <End Role="TMCliente" EntitySet="TMClientes" />
+            <End Role="TRAfiliacion" EntitySet="TRAfiliacions" />
+          </AssociationSet>
+          <AssociationSet Name="TMSeguro_FK_Compania" Association="Self.TMSeguro_FK_Compania">
+            <End Role="TMCompaniaAseguradora" EntitySet="TMCompaniaAseguradoras" />
+            <End Role="TMSeguro" EntitySet="TMSeguroes" />
+          </AssociationSet>
+          <AssociationSet Name="TRAfiliacion_FK_Seguro" Association="Self.TRAfiliacion_FK_Seguro">
+            <End Role="TMSeguro" EntitySet="TMSeguroes" />
+            <End Role="TRAfiliacion" EntitySet="TRAfiliacions" />
+          </AssociationSet>
+          <AssociationSet Name="TRAfiliacion_FK_TRPago_Id" Association="Self.TRAfiliacion_FK_TRPago_Id">
+            <End Role="TRAfiliacion" EntitySet="TRAfiliacions" />
+            <End Role="TRPago" EntitySet="TRPagoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDSegurosModelStoreContainer" CdmEntityContainer="BDSegurosEntities">
+          <EntitySetMapping Name="TMClientes">
+            <EntityTypeMapping TypeName="BDSegurosModel.TMCliente">
+              <MappingFragment StoreEntitySet="TMCliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="DocumentoIdentidad" ColumnName="DocumentoIdentidad" />
+                <ScalarProperty Name="Genero" ColumnName="Genero" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TMCompaniaAseguradoras">
+            <EntityTypeMapping TypeName="BDSegurosModel.TMCompaniaAseguradora">
+              <MappingFragment StoreEntitySet="TMCompaniaAseguradora">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Ruc" ColumnName="Ruc" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Contacto" ColumnName="Contacto" />
+                <ScalarProperty Name="Celular" ColumnName="Celular" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="FechaRenovacion" ColumnName="FechaRenovacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TMSeguroes">
+            <EntityTypeMapping TypeName="BDSegurosModel.TMSeguro">
+              <MappingFragment StoreEntitySet="TMSeguro">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Compania" ColumnName="Compania" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="FactorImpuesto" ColumnName="FactorImpuesto" />
+                <ScalarProperty Name="PorcentajeComision" ColumnName="PorcentajeComision" />
+                <ScalarProperty Name="Prima" ColumnName="Prima" />
+                <ScalarProperty Name="Moneda" ColumnName="Moneda" />
+                <ScalarProperty Name="EdadMaxima" ColumnName="EdadMaxima" />
+                <ScalarProperty Name="FechaVigencia" ColumnName="FechaVigencia" />
+                <ScalarProperty Name="ImporteMensual" ColumnName="ImporteMensual" />
+                <ScalarProperty Name="Cobertura" ColumnName="Cobertura" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRAfiliacions">
+            <EntityTypeMapping TypeName="BDSegurosModel.TRAfiliacion">
+              <MappingFragment StoreEntitySet="TRAfiliacion">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Seguro" ColumnName="Seguro" />
+                <ScalarProperty Name="FechaAfiliacion" ColumnName="FechaAfiliacion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRPagoes">
+            <EntityTypeMapping TypeName="BDSegurosModel.TRPago">
+              <MappingFragment StoreEntitySet="TRPago">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Afiliacion" ColumnName="Afiliacion" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Seguro" ColumnName="Seguro" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="Anio" ColumnName="Anio" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Cuota" ColumnName="Cuota" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
