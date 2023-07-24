@@ -14,19 +14,21 @@ namespace WCFSeguro.Services
     public class PagoService : ServiceBase, IPagoService
     {
 
-        public void GenerarPagos(TRAfiliacion input)//o id afiliacion
+        public void GenerarPagos(int id)
         {
+            var input = cn.TRAfiliacions.FirstOrDefault(p => p.Id == id);
 
             for (int i = 1; i <= 12; i++)
             {
+                var fecha = DateTime.Now.AddMonths(i - 1);
                 cn.TRPagoes.Add(new TRPago
                 {
                     Afiliacion = input.Id,
                     Cliente = input.Cliente,
                     Seguro = input.Seguro,
                     Mes = i,
-                    Anio = DateTime.Now.Year,
-                    Fecha = DateTime.Now.AddMonths(i - 1),
+                    Anio = fecha.Year,
+                    Fecha = fecha,
                     Cuota = input.TMSeguro.ImporteMensual,
 
                     FechaCreacion = DateTime.Now,
@@ -34,8 +36,31 @@ namespace WCFSeguro.Services
                 });
             }
 
+            cn.SaveChanges();
         }
 
-      
+        public List<TRPago> GetPagos(int idAfiliacion)
+        {
+            var pagos = cn.TRPagoes.Where(p => p.Afiliacion == idAfiliacion).ToList();
+
+            var dtoPagos = pagos.Select(p => new TRPago
+            {
+                Id = p.Id,
+                Afiliacion = p.Afiliacion,
+                Seguro = p.Seguro,
+                Anio = p.Anio,
+                Cliente = p.Cliente,
+                Cuota = p.Cuota,
+                Fecha = p.Fecha,
+                Estado = p.Estado,
+                FechaCreacion = p.FechaCreacion,
+                FechaModificacion = p.FechaModificacion,
+                Mes = p.Mes,
+                Monto = p.Monto,
+                Numero = p.Numero,
+            }).ToList();
+
+            return dtoPagos;
+        }
     }
 }

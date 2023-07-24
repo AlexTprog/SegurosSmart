@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="fcceba86-0d38-46b3-a3b4-df66c3f3c238" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51171/Services/Seguro/SeguroService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SeguroService.xsd" MetadataType="Schema" ID="0860cfa7-8dbb-4dac-bf26-cd36f0dd8bf9" SourceId="1" SourceUrl="http://localhost:51171/Services/Seguro/SeguroService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SeguroService1.xsd" MetadataType="Schema" ID="730d275c-342f-499b-97c5-e3adc09414cb" SourceId="1" SourceUrl="http://localhost:51171/Services/Seguro/SeguroService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SeguroService2.xsd" MetadataType="Schema" ID="871e70a7-ab80-4aff-b0ed-84ab0106205e" SourceId="1" SourceUrl="http://localhost:51171/Services/Seguro/SeguroService.svc?xsd=xsd2" />
+    <MetadataFile FileName="SeguroService.wsdl" MetadataType="Wsdl" ID="adf3c82e-0567-4880-b7d8-19608d67ec14" SourceId="1" SourceUrl="http://localhost:51171/Services/Seguro/SeguroService.svc?wsdl" />
+    <MetadataFile FileName="SeguroService.disco" MetadataType="Disco" ID="6c08f751-523b-43a1-88d3-686ad4226954" SourceId="1" SourceUrl="http://localhost:51171/Services/Seguro/SeguroService.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

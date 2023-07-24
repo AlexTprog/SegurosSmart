@@ -7,28 +7,72 @@ using System.Text;
 using WCFSeguro.Data;
 using WCFSeguro.Services.Base;
 
+
 namespace WCFSeguro.Services
 {
     // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de clase "SeguroService" en el código, en svc y en el archivo de configuración a la vez.
     // NOTA: para iniciar el Cliente de prueba WCF para probar este servicio, seleccione SeguroService.svc o SeguroService.svc.cs en el Explorador de soluciones e inicie la depuración.
-    public class SeguroService : ServiceBase, IEntityServiceBase<TMSeguro>
+    public class SeguroService : ServiceBase, ISeguroService
     {
         public void Delete(int id)
         {
             var seguro = Get(id);
             if (seguro != null)
                 cn.TMSeguroes.Remove(seguro);
+            cn.SaveChanges();
         }
 
         public TMSeguro Get(int id)
         {
             var seguro = cn.TMSeguroes.FirstOrDefault(p => p.Id == id);
-            return seguro;
+            var dtoSeguro = new TMSeguro();
+            if (seguro != null)
+            {
+                dtoSeguro = new TMSeguro
+                {
+                    Id = seguro.Id,
+                    Cobertura = seguro.Cobertura,
+                    Compania = seguro.Compania,
+                    Descripcion = seguro.Descripcion,
+                    EdadMaxima = seguro.EdadMaxima,
+                    Estado = seguro.Estado,
+                    FactorImpuesto = seguro.FactorImpuesto,
+                    FechaCreacion = seguro.FechaCreacion,
+                    FechaModificacion = seguro.FechaModificacion,
+                    FechaVigencia = seguro.FechaVigencia,
+                    ImporteMensual = seguro.ImporteMensual,
+                    Moneda = seguro.Moneda,
+                    Numero = seguro.Numero,
+                    PorcentajeComision = seguro.PorcentajeComision,
+                    Prima = seguro.Prima,
+                    Tipo = seguro.Tipo,
+                };
+            }
+            return dtoSeguro;
         }
 
         public List<TMSeguro> GetAll()
         {
-            var seguros = cn.TMSeguroes.ToList();
+            var seguros = cn.TMSeguroes.ToList().Select(p => new TMSeguro
+            {
+                Id = p.Id,
+                Cobertura = p.Cobertura,
+                Compania = p.Compania,
+                Descripcion = p.Descripcion,
+                EdadMaxima = p.EdadMaxima,
+                Estado = p.Estado,
+                FactorImpuesto = p.FactorImpuesto,
+                FechaCreacion = p.FechaCreacion,
+                FechaModificacion = p.FechaModificacion,
+                FechaVigencia = p.FechaVigencia,
+                ImporteMensual = p.ImporteMensual,
+                Moneda = p.Moneda,
+                Numero = p.Numero,
+                PorcentajeComision = p.PorcentajeComision,
+                Prima = p.Prima,
+                Tipo = p.Tipo,
+            }).ToList();
+
             return seguros;
         }
 
@@ -43,7 +87,7 @@ namespace WCFSeguro.Services
         {
             var seguro = Get(input.Id);
             if (seguro != null)
-            {         
+            {
                 seguro.Numero = input.Numero;
                 seguro.Cobertura = input.Cobertura;
                 seguro.Compania = input.Compania;
@@ -58,7 +102,7 @@ namespace WCFSeguro.Services
                 seguro.Prima = input.Prima;
                 seguro.Tipo = input.Tipo;
 
-                seguro.FechaModificacion = DateTime.Now;                
+                seguro.FechaModificacion = DateTime.Now;
             }
             cn.SaveChanges();
         }

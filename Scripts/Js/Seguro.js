@@ -67,22 +67,22 @@ function openModal(id) {
         document.getElementById("lblTitulo").innerHTML = "Editar Seguro";
 
         $.get("Seguro/Get/?id=" + id, function (data) {
-            document.getElementById("txtIdSeguro").value = data[0].Id;
-            document.getElementById("cboCompania").value = data[0].Compania;
-            document.getElementById("txtDesc").value = data[0].Descripcion;
+            document.getElementById("txtIdSeguro").value = data.Id;
+            document.getElementById("cboCompania").value = data.Compania;
+            document.getElementById("txtDesc").value = data.Descripcion;
 
-            document.getElementById("cboTipo").value = data[0].Tipo;
-            document.getElementById("txtNumero").value = data[0].Numero;
-            document.getElementById("txtEdadMax").value = data[0].EdadMaxima;
-            document.getElementById("txtFactImp").value = data[0].FactorImpuesto;
-            document.getElementById("txtPorcentajeCom").value = data[0].PorcentajeComision;
-            document.getElementById("txtPrima").value = data[0].Prima;
-            document.getElementById("txtMensual").value = data[0].ImporteMensual;
-            document.getElementById("txtCobertura").value = data[0].Cobertura;
+            document.getElementById("cboTipo").value = data.Tipo;
+            document.getElementById("txtNumero").value = data.Numero;
+            document.getElementById("txtEdadMax").value = data.EdadMaxima;
+            document.getElementById("txtFactImp").value = data.FactorImpuesto;
+            document.getElementById("txtPorcentajeCom").value = data.PorcentajeComision;
+            document.getElementById("txtPrima").value = data.Prima;
+            document.getElementById("txtMensual").value = data.ImporteMensual;
+            document.getElementById("txtCobertura").value = data.Cobertura;
 
-            document.getElementById("cboMoneda").value = data[0].Moneda;
+            document.getElementById("cboMoneda").value = data.Moneda;
 
-            document.getElementById("dtFechaVig").value = data[0].FechaVigencia;
+            document.getElementById("dtFechaVig").value = data.FechaVigencia;
         });
     }
 }

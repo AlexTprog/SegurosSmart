@@ -1,4 +1,4 @@
-﻿listClientes();
+﻿listAfiliacion();
 
 
 $("#dtFechaAfiliacion").datepicker(
@@ -37,11 +37,130 @@ function fillComboSeguro(data, control) {
     control.innerHTML = content;
 }
 
-function listClientes() {
+function listAfiliacion() {
     $.get("Afiliacion/GetAll", function (data) {
-        createListTable(["Id", "Cliente", "Seguro", "Fecha Afiliacion"], data);
+        createListTableAfiliacion(["Id", "Cliente", "Seguro", "Fecha Afiliacion"], data);
     });
 }
+
+function createListTableAfiliacion(arrayColumnas, data) {
+    var contenido = "";
+    contenido += "<table id='tablas'  class='table' >";
+    contenido += "<thead>";
+    contenido += "<tr>";
+    for (var i = 0; i < arrayColumnas.length; i++) {
+        contenido += "<td>";
+        contenido += arrayColumnas[i];
+        contenido += "</td>";
+
+    }
+    contenido += "<td>Acciones</td>";
+    contenido += "</tr>";
+    contenido += "</thead>";
+    var llaves = Object.keys(data[0]);
+    contenido += "<tbody>";
+    for (var i = 0; i < data.length; i++) {
+        contenido += "<tr>";
+
+        for (var j = 0; j < llaves.length; j++) {
+            var valorLLaves = llaves[j];
+            contenido += "<td>";
+            contenido += data[i][valorLLaves];
+            contenido += "</td>";
+
+        }
+        var llaveId = llaves[0];
+        contenido += "<td>";
+        contenido += "<button class='btn btn-primary' onclick='openModal(" + data[i][llaveId] + ")' data-toggle='modal' data-target='#myModal'>E</button> "
+        contenido += "<button class='btn btn-danger' onclick='eliminar(" + data[i][llaveId] + ")' >D</i></button>"
+        contenido += "<button class='btn btn-info' data-toggle='modal' data-target='#pagosModal' onclick='genPagos(" + data[i][llaveId] + ")' >P</i></button>"
+        contenido += "</td>"
+
+        contenido += "</tr>";
+    }
+    contenido += "</tbody>";
+    contenido += "</table>";
+    document.getElementById("tabla").innerHTML = contenido;
+    $("#tablas").dataTable(
+        {
+            searching: false
+        }
+
+    );
+}
+
+function genPagos(id) {    
+    $.get("Afiliacion/GetPagos/?idAfiliacion=" + id, function (data) {
+
+        if (data.length >= 12) {
+            openModalPagos(data);
+        } else {
+            var frm = new FormData();
+            frm.append("Id", id);
+            $.ajax({
+                type: "POST",
+                url: "Afiliacion/GenerarPagos",
+                data: frm,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    switch (data) {
+                        case '0':
+                            alert("Ocurrio un error");
+                            break;
+                        case '1':
+                            $.get("Afiliacion/GetPagos/?idAfiliacion=" + id, function (data) {
+                                openModalPagos(data);
+                            })
+                            break;
+                        default:
+                            alert("Ocurrio un error inesperado");
+                            break;
+                    }
+                }
+            });
+
+        }
+    })
+
+
+
+
+}
+
+function openModalPagos(data) {
+    var arrayColumnas = ["Id", "Año", "Mes", "Fecha", "Estado", "Cliente", "Seguro", "Cuota"]
+    var contenido = "";
+    contenido += "<table id='tablaPagos'  class='table' >";
+    contenido += "<thead>";
+    contenido += "<tr>";
+    for (var i = 0; i < arrayColumnas.length; i++) {
+        contenido += "<td>";
+        contenido += arrayColumnas[i];
+        contenido += "</td>";
+
+    }
+    contenido += "</thead>";
+    var llaves = Object.keys(data[0]);
+    contenido += "<tbody>";
+    for (var i = 0; i < data.length; i++) {
+        contenido += "<tr>";
+
+        for (var j = 0; j < llaves.length; j++) {
+            var valorLLaves = llaves[j];
+            contenido += "<td>";
+            contenido += data[i][valorLLaves];
+            contenido += "</td>";
+        }
+
+        contenido += "</tr>";
+    }
+
+    contenido += "</tbody>";
+    contenido += "</table>";
+    document.getElementById("tablaPagos").innerHTML = contenido;
+}
+
 
 function eliminar(id) {
 
@@ -74,11 +193,11 @@ function openModal(id) {
 
         $.get("Afiliacion/Get/?id=" + id, function (data) {
 
-            document.getElementById("txtIdAfiliacion").value = data[0].Id;
-            document.getElementById("cboCliente").value = data[0].Cliente;
-            document.getElementById("cboSeguro").value = data[0].Seguro;
+            document.getElementById("txtIdAfiliacion").value = data.Id;
+            document.getElementById("cboCliente").value = data.Cliente;
+            document.getElementById("cboSeguro").value = data.Seguro;
 
-            document.getElementById("dtFechaAfiliacion").value = data[0].FechaAfiliacion;
+            document.getElementById("dtFechaAfiliacion").value = data.FechaAfiliacion;
 
         });
 
@@ -109,7 +228,6 @@ function Agregar() {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-                    console.log(data);
                     switch (data) {
                         case '0':
                             alert("Ocurrio un error");

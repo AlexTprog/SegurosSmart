@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeguroMVC", "SeguroMVC.csproj", "{DFF02E82-07A3-4BD1-B172-79FBA831898F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{597E2670-2586-4AD6-BCF4-051FC5110DA4} = {597E2670-2586-4AD6-BCF4-051FC5110DA4}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFSeguro", "WCFSeguro\WCFSeguro.csproj", "{597E2670-2586-4AD6-BCF4-051FC5110DA4}"
 EndProject

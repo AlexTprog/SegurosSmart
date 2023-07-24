@@ -50,6 +50,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -121,6 +123,31 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connected Services\AfiliacionService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\ClienteService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\CompaniaService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\PagoService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\SeguroService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AfiliacionController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\Base\ICrudController.cs" />
@@ -152,6 +179,86 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\AfiliacionService\AfiliacionService.wsdl" />
+    <None Include="Connected Services\AfiliacionService\AfiliacionService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AfiliacionService\AfiliacionService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AfiliacionService\AfiliacionService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\AfiliacionService\SegurosSmart.AfiliacionService.TRAfiliacion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\ClienteService\ClienteService.wsdl" />
+    <None Include="Connected Services\ClienteService\ClienteService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ClienteService\ClienteService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ClienteService\ClienteService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AfiliacionService\AfiliacionService.disco" />
+    <None Include="Connected Services\AfiliacionService\configuration91.svcinfo" />
+    <None Include="Connected Services\AfiliacionService\configuration.svcinfo" />
+    <None Include="Connected Services\AfiliacionService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\ClienteService\SegurosSmart.ClienteService.TMCliente.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\CompaniaService\CompaniaService.wsdl" />
+    <None Include="Connected Services\CompaniaService\CompaniaService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CompaniaService\CompaniaService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\CompaniaService\CompaniaService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\CompaniaService\SegurosSmart.CompaniaService.TMCompaniaAseguradora.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\PagoService\PagoService.disco" />
+    <None Include="Connected Services\PagoService\configuration91.svcinfo" />
+    <None Include="Connected Services\PagoService\configuration.svcinfo" />
+    <None Include="Connected Services\PagoService\PagoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PagoService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\ClienteService\ClienteService.disco" />
+    <None Include="Connected Services\ClienteService\configuration91.svcinfo" />
+    <None Include="Connected Services\ClienteService\configuration.svcinfo" />
+    <None Include="Connected Services\ClienteService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Connected Services\PagoService\SegurosSmart.PagoService.TRPago.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\SeguroService\SeguroService.disco" />
+    <None Include="Connected Services\SeguroService\configuration91.svcinfo" />
+    <None Include="Connected Services\SeguroService\configuration.svcinfo" />
+    <None Include="Connected Services\SeguroService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\CompaniaService\CompaniaService.disco" />
+    <None Include="Connected Services\CompaniaService\configuration91.svcinfo" />
+    <None Include="Connected Services\CompaniaService\configuration.svcinfo" />
+    <None Include="Connected Services\CompaniaService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -204,6 +311,26 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Connected Services\PagoService\PagoService.wsdl" />
+    <None Include="Connected Services\PagoService\PagoService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\PagoService\PagoService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SeguroService\SeguroService.wsdl" />
+    <None Include="Connected Services\SeguroService\SeguroService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SeguroService\SeguroService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\SeguroService\SeguroService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Connected Services\SeguroService\SegurosSmart.SeguroService.TMSeguro.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Data\Connection.dbml.layout">
       <DependentUpon>Connection.dbml</DependentUpon>
     </None>
@@ -264,6 +391,16 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\AfiliacionService\" />
+    <WCFMetadataStorage Include="Connected Services\ClienteService\" />
+    <WCFMetadataStorage Include="Connected Services\CompaniaService\" />
+    <WCFMetadataStorage Include="Connected Services\PagoService\" />
+    <WCFMetadataStorage Include="Connected Services\SeguroService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

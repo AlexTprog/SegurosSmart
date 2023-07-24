@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="a1f693bb-97fe-4c78-84b8-1d00afec8809" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51171/Services/Afiliacion/AfiliacionService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AfiliacionService.wsdl" MetadataType="Wsdl" ID="2d7120d8-1cfe-4e05-924c-def5f4e66f49" SourceId="1" SourceUrl="http://localhost:51171/Services/Afiliacion/AfiliacionService.svc?wsdl" />
+    <MetadataFile FileName="AfiliacionService.disco" MetadataType="Disco" ID="435a2eb8-d423-4d6b-9c38-56c909f2cc10" SourceId="1" SourceUrl="http://localhost:51171/Services/Afiliacion/AfiliacionService.svc?disco" />
+    <MetadataFile FileName="AfiliacionService.xsd" MetadataType="Schema" ID="084b5495-7d4f-411d-b79c-cc78a836bd0d" SourceId="1" SourceUrl="http://localhost:51171/Services/Afiliacion/AfiliacionService.svc?xsd=xsd2" />
+    <MetadataFile FileName="AfiliacionService1.xsd" MetadataType="Schema" ID="91c7eae2-9a09-45bb-b696-e1082bc76d77" SourceId="1" SourceUrl="http://localhost:51171/Services/Afiliacion/AfiliacionService.svc?xsd=xsd1" />
+    <MetadataFile FileName="AfiliacionService2.xsd" MetadataType="Schema" ID="063818ed-3a7c-4e3b-a1cb-cc76e29851d9" SourceId="1" SourceUrl="http://localhost:51171/Services/Afiliacion/AfiliacionService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

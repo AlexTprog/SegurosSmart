@@ -52,24 +52,24 @@ function openModal(id) {
     } else {
         document.getElementById("lblTitulo").innerHTML = "Editar Cliente";
 
-        $.get("Cliente/Get/?id=" + id, function (data) {
+        $.get("Cliente/Get/?id=" + id, function (data) {                        
+            
+            document.getElementById("txtIdCliente").value = data.Id;
+            document.getElementById("txtnombre").value = data.Nombres;
+            document.getElementById("txtapPaterno").value = data.ApellidoPaterno;
 
-            document.getElementById("txtIdCliente").value = data[0].Id;
-            document.getElementById("txtnombre").value = data[0].Nombres;
-            document.getElementById("txtapPaterno").value = data[0].ApellidoPaterno;
+            document.getElementById("txtapMaterno").value = data.ApellidoMaterno;
 
-            document.getElementById("txtapMaterno").value = data[0].ApellidoMaterno;
+            document.getElementById("dtFechaNacimiento").value = data.FechaNacimiento;
 
-            document.getElementById("dtFechaNacimiento").value = data[0].FechaNacimiento;
+            document.getElementById("cboGenero").value = data.Genero;
 
-            document.getElementById("cboGenero").value = data[0].Genero;
+            document.getElementById("txttelefono").value = data.Telefono;
+            document.getElementById("txtDireccion").value = data.Direccion;
+            document.getElementById("txtEmail").value = data.Email;
 
-            document.getElementById("txttelefono").value = data[0].Telefono;
-            document.getElementById("txtDireccion").value = data[0].Direccion;
-            document.getElementById("txtEmail").value = data[0].Email;
-
-            document.getElementById("cboTipodoc").value = data[0].TipoDocumento;
-            document.getElementById("txtDocumentoIdentidad").value = data[0].DocumentoIdentidad;
+            document.getElementById("cboTipodoc").value = data.TipoDocumento;
+            document.getElementById("txtDocumentoIdentidad").value = data.DocumentoIdentidad;
         });
 
     }

@@ -13,6 +13,9 @@ namespace WCFSeguro.Services
     public interface IPagoService
     {
         [OperationContract]
-        void GenerarPagos(TRAfiliacion input);
+        void GenerarPagos(int id);
+
+        [OperationContract]
+        List<TRPago> GetPagos(int idAfiliacion);
     }
 }

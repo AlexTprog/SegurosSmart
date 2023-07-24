@@ -12,7 +12,7 @@ namespace WCFSeguro.Services
 {
     // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de clase "ClienteService" en el código, en svc y en el archivo de configuración a la vez.
     // NOTA: para iniciar el ClienteService de prueba WCF para probar este servicio, seleccione ClienteService.svc o ClienteService.svc.cs en el Explorador de soluciones e inicie la depuración.
-    public class ClienteService : ServiceBase, IEntityServiceBase<TMCliente>
+    public class ClienteService : ServiceBase, IClienteService
     {
         public void Delete(int id)
         {
@@ -20,17 +20,62 @@ namespace WCFSeguro.Services
 
             if (cliente != null)
                 cn.TMClientes.Remove(cliente);
+
+            cn.SaveChanges();
         }
 
         public TMCliente Get(int id)
         {
             var cliente = cn.TMClientes.FirstOrDefault(x => x.Id == id);
-            return cliente;
+
+            var dtoCliente = new TMCliente();
+            if (cliente != null)
+            {
+                //Generar Dtos e implementar automapper
+                dtoCliente = new TMCliente
+                {
+                    Id = cliente.Id,
+                    Nombres = cliente.Nombres,
+                    ApellidoPaterno = cliente.ApellidoPaterno,
+                    ApellidoMaterno = cliente.ApellidoMaterno,
+                    Direccion = cliente.Direccion,
+                    DocumentoIdentidad = cliente.DocumentoIdentidad,
+                    Email = cliente.Email,
+                    Estado = cliente.Estado,
+                    FechaCreacion = cliente.FechaCreacion,
+                    FechaModificacion = cliente.FechaModificacion,
+                    FechaNacimiento = cliente.FechaNacimiento,
+                    Genero = cliente.Genero,
+                    Telefono = cliente.Telefono,
+                    TipoDocumento = cliente.TipoDocumento,
+                };
+            }
+            
+
+            return dtoCliente;
         }
 
         public List<TMCliente> GetAll()
         {
-            var clientes = cn.TMClientes.ToList();
+            //Generar Dtos e implementar automapper
+            var clientes = cn.TMClientes.ToList().Select(p => new TMCliente
+            {
+                Id = p.Id,
+                Nombres = p.Nombres,
+                ApellidoPaterno = p.ApellidoPaterno,
+                ApellidoMaterno = p.ApellidoMaterno,
+                Direccion = p.Direccion,
+                DocumentoIdentidad = p.DocumentoIdentidad,
+                Email = p.Email,
+                Estado = p.Estado,
+                FechaCreacion = p.FechaCreacion,
+                FechaModificacion = p.FechaModificacion,
+                FechaNacimiento = p.FechaNacimiento,
+                Genero = p.Genero,
+                Telefono = p.Telefono,
+                TipoDocumento = p.TipoDocumento,
+            }).ToList();
+
             return clientes;
         }
 

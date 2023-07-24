@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="a980b530-ae40-4c20-953b-274e71575736" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51171/Services/Pago/PagoService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PagoService.wsdl" MetadataType="Wsdl" ID="bba684f2-baef-4dc9-b4c5-99c43937da64" SourceId="1" SourceUrl="http://localhost:51171/Services/Pago/PagoService.svc?wsdl" />
+    <MetadataFile FileName="PagoService.disco" MetadataType="Disco" ID="f0889f92-aa1b-4d4f-a3b0-d3ca9993e828" SourceId="1" SourceUrl="http://localhost:51171/Services/Pago/PagoService.svc?disco" />
+    <MetadataFile FileName="PagoService.xsd" MetadataType="Schema" ID="a72c721e-193b-4779-9c14-710af8c83e84" SourceId="1" SourceUrl="http://localhost:51171/Services/Pago/PagoService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PagoService1.xsd" MetadataType="Schema" ID="09770977-7d95-45a4-85ce-1052323664fe" SourceId="1" SourceUrl="http://localhost:51171/Services/Pago/PagoService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PagoService2.xsd" MetadataType="Schema" ID="3096fa82-cc66-4747-964e-afc84a61fbc3" SourceId="1" SourceUrl="http://localhost:51171/Services/Pago/PagoService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

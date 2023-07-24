@@ -6,11 +6,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SegurosSmart.Controllers.Base;
+using SegurosSmart.ClienteService;
+using SegurosSmart.CompaniaService;
 
 namespace SegurosSmart.Controllers
 {
     public class CompaniaController : BaseController, ICrudController<Compania>
     {
+        private CompaniaServiceClient serviceCompania = new CompaniaServiceClient();
+
         public ActionResult Index()
         {
             return View();
@@ -18,25 +22,25 @@ namespace SegurosSmart.Controllers
 
         public JsonResult Get(int id)
         {
-            var companiaDb = cn.TMCompaniaAseguradora.Where(p => p.Id == id && p.Estado == ((int)EstadoCompania.ACTIVO))
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Descripcion,
-                    p.Ruc,
-                    p.RazonSocial,
-                    p.Contacto,
-                    p.Celular,
-                    p.Contrato,
-                    FechaRenovacion = p.FechaRenovacion.ToShortDateString(),
-                });
+            var dbCompania = serviceCompania.Get(id);
+            var formatCompania = new
+            {
+                dbCompania.Id,
+                dbCompania.Descripcion,
+                dbCompania.Ruc,
+                dbCompania.RazonSocial,
+                dbCompania.Contacto,
+                dbCompania.Celular,
+                dbCompania.Contrato,
+                FechaRenovacion = dbCompania.FechaRenovacion.ToShortDateString(),
+            };
 
-            return Json(companiaDb, JsonRequestBehavior.AllowGet);
+            return Json(formatCompania, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAll()
         {
-            var companiasDb = cn.TMCompaniaAseguradora.Where(p => p.Estado == ((int)EstadoCompania.ACTIVO))
+            var companiasDb = serviceCompania.GetAll().Where(p => p.Estado == ((int)EstadoCompania.ACTIVO))
                 .Select(p => new
                 {
                     p.Id,
@@ -47,8 +51,8 @@ namespace SegurosSmart.Controllers
                     p.Celular,
                     p.Contrato,
                     FechaRenovacion = p.FechaRenovacion.ToShortDateString(),
-
                 }).ToList();
+
 
             return Json(companiasDb, JsonRequestBehavior.AllowGet);
         }
@@ -58,9 +62,9 @@ namespace SegurosSmart.Controllers
             int nregistrosAfectados = 0;
             try
             {
-                var companiaDb = cn.TMCompaniaAseguradora.Where(p => p.Id == id).First();
+                var companiaDb = serviceCompania.Get(id);
                 companiaDb.Estado = ((int)EstadoCompania.INACTIVO);
-                cn.SubmitChanges();
+                serviceCompania.Update(companiaDb);
                 nregistrosAfectados = 1;
             }
             catch (Exception ex)
@@ -72,15 +76,14 @@ namespace SegurosSmart.Controllers
 
         public int SaveOrUpdate(Compania input)
         {
+
+            var companiaDb = serviceCompania.Get(input.Id);
             int nregistrosAfectados = 0;
-
-            var companiaDb = cn.TMCompaniaAseguradora.FirstOrDefault(p => p.Id == input.Id);
-
             try
             {
-                if (companiaDb is null)
+                if (companiaDb.Id == 0)
                 {
-                    var newCompania = new Data.TMCompaniaAseguradora
+                    var newCompania = new CompaniaService.TMCompaniaAseguradora
                     {
                         RazonSocial = input.RazonSocial,
                         Ruc = input.Ruc,
@@ -91,10 +94,10 @@ namespace SegurosSmart.Controllers
                         Estado = (int)input.Estado,
                         FechaRenovacion = input.FechaRenovacion,
 
-                        FechaCreacion = DateTime.Now,                        
+                        FechaCreacion = DateTime.Now,
                     };
-                    cn.TMCompaniaAseguradora.InsertOnSubmit(newCompania);
-                    cn.SubmitChanges();
+                    serviceCompania.Save(newCompania);
+
                     nregistrosAfectados = 1;
                 }
                 else
@@ -110,7 +113,7 @@ namespace SegurosSmart.Controllers
                     //AUDIT                   
                     companiaDb.FechaModificacion = DateTime.Now;
 
-                    cn.SubmitChanges();
+                    serviceCompania.Update(companiaDb);
                     nregistrosAfectados = 1;
                 }
             }

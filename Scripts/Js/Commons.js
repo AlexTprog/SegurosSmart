@@ -37,7 +37,7 @@ function createListTable(arrayColumnas, data) {
         var llaveId = llaves[0];
         contenido += "<td>";
         contenido += "<button class='btn btn-primary' onclick='openModal(" + data[i][llaveId] + ")' data-toggle='modal' data-target='#myModal'>E</button> "
-        contenido += "<button class='btn btn-danger' onclick='eliminar(" + data[i][llaveId] + ")' ></i></button>"
+        contenido += "<button class='btn btn-danger' onclick='eliminar(" + data[i][llaveId] + ")' >D</i></button>"
         contenido += "</td>"
 
         contenido += "</tr>";

@@ -10,6 +10,7 @@ $("#dtFechaRen").datepicker(
 
 function listCompania() {
     $.get("Compania/GetAll", function (data) {
+        
         createListTable(["Id", "Descripcion", "Ruc", "Razon Social", "Contacto",
             "Celular", "Contrato", "Fecha Renovacion"], data);
     });
@@ -46,16 +47,16 @@ function openModal(id) {
 
         $.get("Compania/Get/?id=" + id, function (data) {
 
-            document.getElementById("txtIdComp").value = data[0].Id;
-            document.getElementById("txtDesc").value = data[0].Descripcion;
-            document.getElementById("txtRuc").value = data[0].Ruc;
+            document.getElementById("txtIdComp").value = data.Id;
+            document.getElementById("txtDesc").value = data.Descripcion;
+            document.getElementById("txtRuc").value = data.Ruc;
 
-            document.getElementById("txtRazonSocial").value = data[0].RazonSocial;
-            document.getElementById("txtContacto").value = data[0].Contacto;
-            document.getElementById("txtCelular").value = data[0].Celular;
-            document.getElementById("txtContrato").value = data[0].Contrato;
+            document.getElementById("txtRazonSocial").value = data.RazonSocial;
+            document.getElementById("txtContacto").value = data.Contacto;
+            document.getElementById("txtCelular").value = data.Celular;
+            document.getElementById("txtContrato").value = data.Contrato;
 
-            document.getElementById("dtFechaRen").value = data[0].FechaRenovacion;
+            document.getElementById("dtFechaRen").value = data.FechaRenovacion;
 
         });
 

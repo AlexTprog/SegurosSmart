@@ -4,15 +4,18 @@ using SegurosSmart.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Data.SqlTypes;
 using SegurosSmart.Controllers.Base;
+using SegurosSmart.ClienteService;
+
 
 namespace SegurosSmart.Controllers
 {
     public class ClienteController : BaseController, ICrudController<Cliente>
     {
+
+        private ClienteServiceClient serviceCliente = new ClienteServiceClient();
+
         public ActionResult Index()
         {
             return View();
@@ -20,30 +23,32 @@ namespace SegurosSmart.Controllers
 
         public JsonResult Get(int id)
         {
-            var clienteDb = cn.TMCliente.Where(p => p.Id == id && p.Estado == ((int)EstadoSeguro.ACTIVO))
-                .Select(p => new
-                {
-                    p.Id,
-                    p.Nombres,
-                    p.ApellidoPaterno,
-                    p.ApellidoMaterno,
-                    FechaNacimiento = p.FechaNacimiento.ToShortDateString(),
-                    Genero = (Genero)p.Genero,
-                    p.Telefono,
-                    p.Direccion,
-                    TipoDocumento = (TipoDocumento)p.TipoDocumento,
-                    p.DocumentoIdentidad,
-                    p.Email
-                });
+            var dbCliente = serviceCliente.Get(id);
 
-            return Json(clienteDb, JsonRequestBehavior.AllowGet);
+            //Con Dtos Quedaba Mejor D:
+            //Da formato, la idea es que en caso se pueda agregar mas tipos de documento desde codigo
+            var dbFormat = new
+            {
+                dbCliente.Id,
+                dbCliente.Nombres,
+                dbCliente.ApellidoPaterno,
+                dbCliente.ApellidoMaterno,
+                FechaNacimiento = dbCliente.FechaNacimiento.ToShortDateString(),
+                Genero = (Genero)dbCliente.Genero,
+                dbCliente.Telefono,
+                dbCliente.Direccion,
+                TipoDocumento = (TipoDocumento)dbCliente.TipoDocumento,
+                dbCliente.DocumentoIdentidad,
+                dbCliente.Email
+            };
+
+            return Json(dbFormat, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAll()
         {
-            var clientesDb = cn.TMCliente
-                .Where(p => p.Estado == (int)EstadoSeguro.ACTIVO)
-                .Select(p => new
+            var dbClientes = serviceCliente.GetAll()
+                .Where(p => p.Estado == (int)EstadoSeguro.ACTIVO).Select(p => new
                 {
                     p.Id,
                     p.Nombres,
@@ -56,10 +61,9 @@ namespace SegurosSmart.Controllers
                     p.Email,
                     TipoDocumento = Enum.GetName(typeof(TipoDocumento), p.TipoDocumento),
                     p.DocumentoIdentidad
-                })
-                .ToList();
+                }).ToList();
 
-            return Json(clientesDb, JsonRequestBehavior.AllowGet);
+            return Json(dbClientes, JsonRequestBehavior.AllowGet);
         }
 
         public int Delete(int id)
@@ -67,10 +71,9 @@ namespace SegurosSmart.Controllers
             int nregistrosAfectados = 0;
             try
             {
-                var clienteDb = cn.TMCliente.Where(p => p.Id == id).First();
-
+                var clienteDb = serviceCliente.Get(id);
                 clienteDb.Estado = ((int)EstadoCliente.INACTIVO);
-                cn.SubmitChanges();
+                serviceCliente.Update(clienteDb);
                 nregistrosAfectados = 1;
             }
             catch (Exception ex)
@@ -83,14 +86,16 @@ namespace SegurosSmart.Controllers
 
         public int SaveOrUpdate(Cliente input)
         {
-            var clienteDb = cn.TMCliente.FirstOrDefault(p => p.Id == input.Id);
+            var clienteDb = serviceCliente.Get(input.Id);
+
             int nregistrosAfectados = 0;
+
             try
             {
-                if (clienteDb is null)
+                if (clienteDb.Id == 0)
                 {
 
-                    var newCliente = new Data.TMCliente
+                    var newCliente = new TMCliente
                     {
                         Nombres = input.Nombres,
                         ApellidoMaterno = input.ApellidoMaterno,
@@ -107,8 +112,8 @@ namespace SegurosSmart.Controllers
                         FechaCreacion = DateTime.Now,
                     };
 
-                    cn.TMCliente.InsertOnSubmit(newCliente);
-                    cn.SubmitChanges();
+                    serviceCliente.Save(newCliente);
+
                     nregistrosAfectados = 1;
                 }
                 else
@@ -127,7 +132,7 @@ namespace SegurosSmart.Controllers
 
                     clienteDb.FechaModificacion = DateTime.Now;
 
-                    cn.SubmitChanges();
+                    serviceCliente.Update(clienteDb);
                     nregistrosAfectados = 1;
                 }
             }

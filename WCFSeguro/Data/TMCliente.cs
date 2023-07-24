@@ -11,7 +11,8 @@ namespace WCFSeguro.Data
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Runtime.Serialization;
+
     public partial class TMCliente
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -35,7 +36,7 @@ namespace WCFSeguro.Data
         public Nullable<System.DateTime> FechaCreacion { get; set; }
         public Nullable<System.DateTime> FechaModificacion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]        
         public virtual ICollection<TRAfiliacion> TRAfiliacions { get; set; }
     }
 }
